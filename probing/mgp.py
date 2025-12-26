@@ -51,6 +51,13 @@ def main():
         action="store_true", 
         help="Calibrate prediction probabilities."
     )
+    parser.add_argument(
+    "--prompt_style",
+    default="zero",
+    type=str,
+    choices=["zero", "role", "cot"],
+    help="Prompting structure: zero-shot, role prompting, or chain-of-thought."
+    )
     args = parser.parse_args()
 
     # Load model and tokenizer
@@ -62,7 +69,8 @@ def main():
     prompts, cal_prompts = helpers.load_prompts(
         args.model, 
         args.attribute, 
-        args.variable
+        args.variable,
+        prompt_style=args.prompt_style
     )
 
     # Define variable and attribute classes

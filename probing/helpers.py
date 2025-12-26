@@ -13,7 +13,9 @@ from transformers import (
     T5Tokenizer
 )
 
-import prompting
+import prompting as zeroPrompting
+import rolePrompting 
+import cotPrompting 
 
 # Define path to attribute lists
 ATTRIBUTES_PATH = os.path.abspath("../data/attributes/{}.txt")
@@ -76,7 +78,14 @@ def load_tokenizer(model_name):
     
 
 # Function to prepare and load prompts
-def load_prompts(model_name, attribute, variable):
+def load_prompts(model_name, attribute, variable, prompt_style="zero"):
+
+    if prompt_style == "role":
+        prompting = rolePrompting
+    elif prompt_style == "cot":
+        prompting = cotPrompting
+    else:
+        prompting = zeroPrompting
 
     # Overt prejudice prompts
     if variable == "race":
